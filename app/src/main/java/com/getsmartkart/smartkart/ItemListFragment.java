@@ -10,8 +10,6 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import com.getsmartkart.smartkart.dummy.DummyContent;
-import com.getsmartkart.smartkart.dummy.DummyContent.DummyItem;
 
 public class ItemListFragment extends Fragment {
 
@@ -19,6 +17,7 @@ public class ItemListFragment extends Fragment {
     private int mColumnCount = 1;
     private OnListFragmentInteractionListener mListener;
     private View view;
+    public MyItemRecyclerViewAdapter adapter;
 
     public ItemListFragment() {
     }
@@ -55,7 +54,8 @@ public class ItemListFragment extends Fragment {
             } else {
                 recyclerView.setLayoutManager(new GridLayoutManager(context, mColumnCount));
             }
-            recyclerView.setAdapter(new MyItemRecyclerViewAdapter(DummyContent.ITEMS, mListener, getActivity(), getFragmentManager()));
+            adapter = new MyItemRecyclerViewAdapter(((ActiveShoppingCartActivity)getActivity()).listOfData, mListener, getActivity(), getFragmentManager());
+            recyclerView.setAdapter(adapter);
         }
 
 
@@ -82,6 +82,6 @@ public class ItemListFragment extends Fragment {
 
     public interface OnListFragmentInteractionListener {
         // TODO: Update argument type and name
-        void onListFragmentInteraction(DummyItem item);
+        void onListFragmentInteraction(ShoppingCartItem item);
     }
 }

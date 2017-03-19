@@ -3,6 +3,7 @@ package com.getsmartkart.smartkart;
 
 import android.app.Fragment;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +40,19 @@ public class CheckoutBarFragment extends Fragment {
         checkoutButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                //TODO: Open up confirm screen and then send request.
+                ActiveShoppingCartActivity ref = (ActiveShoppingCartActivity) getActivity();
+                ref.closePopup();
+                if(!(ref.getPopupStatus())){
+                    Bundle checkoutBundle = new Bundle();
+                    checkoutBundle.putDouble("cost", currentPrice);
+                    ConfirmCheckoutFragment confirmCheckoutFragment = new ConfirmCheckoutFragment();
+                    confirmCheckoutFragment.setArguments(checkoutBundle);
+                    confirmCheckoutFragment.show(getFragmentManager(), "Confirm Checkout");
+                    ref.openPopup();
+                }
+                else{
+                    Log.v("Popup Already Active", "Active - Edit");
+                }
             }
         });
 
@@ -47,7 +60,7 @@ public class CheckoutBarFragment extends Fragment {
     }
 
     public void updateTotalPrice(double newPrice){
-        DecimalFormat df = new DecimalFormat("#.##");
+        DecimalFormat df = new DecimalFormat("0.00");
         df.setRoundingMode(RoundingMode.CEILING);
         currentPrice = newPrice;
         currentPriceText.setText("Total: " + df.format(newPrice));

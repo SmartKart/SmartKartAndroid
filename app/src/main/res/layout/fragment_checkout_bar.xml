@@ -15,7 +15,7 @@
         android:textSize="25sp"
         android:textColor="#fff"
         android:layout_weight="0.6"
-        android:text="Total: $40.00" />
+        android:text="Total: $0.00" />
 
     <Button
         android:id="@+id/checkout_button"
