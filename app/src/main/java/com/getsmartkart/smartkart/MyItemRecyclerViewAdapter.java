@@ -1,6 +1,12 @@
 package com.getsmartkart.smartkart;
 
+import android.app.Activity;
+import android.app.FragmentManager;
+import android.media.MediaPlayer;
+import android.os.Bundle;
+import android.os.Vibrator;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,10 +31,14 @@ public class MyItemRecyclerViewAdapter extends RecyclerSwipeAdapter<MyItemRecycl
 
     private final List<DummyItem> mValues;
     private final OnListFragmentInteractionListener mListener;
+    private final Activity activity;
+    private final FragmentManager fragmentManager;
 
-    public MyItemRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener) {
+    public MyItemRecyclerViewAdapter(List<DummyItem> items, OnListFragmentInteractionListener listener, Activity mainActivity, FragmentManager fm) {
         mValues = items;
         mListener = listener;
+        activity = mainActivity;
+        fragmentManager = fm;
     }
 
     @Override
@@ -66,6 +76,26 @@ public class MyItemRecyclerViewAdapter extends RecyclerSwipeAdapter<MyItemRecycl
                 }
             }
         });
+
+        holder.editButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ActiveShoppingCartActivity ref = (ActiveShoppingCartActivity) activity;
+                ref.closePopup();
+                if(!(ref.getPopupStatus())){
+                    Bundle editItemBundle = new Bundle();
+                    editItemBundle.putString("name", mValues.get(position).content);
+                    editItemBundle.putInt("num", position);
+                    EditItemAmountFragment editAmountFragment = new EditItemAmountFragment();
+                    editAmountFragment.setArguments(editItemBundle);
+                    editAmountFragment.show(fragmentManager, "Edit Amount");
+                    ref.openPopup();
+                }
+                else{
+                    Log.v("Popup Already Active", "Active - Edit");
+                }
+            }
+        });
     }
 
     @Override
@@ -84,6 +114,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerSwipeAdapter<MyItemRecycl
         public final TextView mContentView;
         public final ImageButton removeItemFromCart;
         public final SwipeLayout swipeLayout;
+        public final Button editButton;
         public DummyItem mItem;
 
         public ViewHolder(View view) {
@@ -93,6 +124,7 @@ public class MyItemRecyclerViewAdapter extends RecyclerSwipeAdapter<MyItemRecycl
             mContentView = (TextView) view.findViewById(R.id.unit_price);
             swipeLayout = (SwipeLayout) view.findViewById(R.id.CartSwipeLayout);
             removeItemFromCart = (ImageButton) view.findViewById(R.id.remove_item);
+            editButton = (Button) view.findViewById(R.id.list_item_edit_button);
         }
 
         @Override

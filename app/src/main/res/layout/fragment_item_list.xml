@@ -9,3 +9,5 @@
     app:layoutManager="LinearLayoutManager"
     tools:context="com.getsmartkart.smartkart.ItemListFragment"
     tools:listitem="@layout/fragment_item" />
+
+

@@ -2,15 +2,30 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#03A9F4"
+    android:background="@drawable/background_gradient"
     android:orientation="horizontal"
     tools:context="com.getsmartkart.smartkart.CheckoutBarFragment">
 
     <TextView
-        android:layout_width="match_parent"
+        android:id="@+id/current_price"
+        android:layout_width="0dp"
         android:layout_height="match_parent"
-        android:textSize="30sp"
+        android:textAlignment="center"
+        android:gravity="center"
+        android:textSize="25sp"
+        android:textColor="#fff"
+        android:layout_weight="0.6"
         android:text="Total: $40.00" />
+
+    <Button
+        android:id="@+id/checkout_button"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="0.5"
+        android:layout_margin="10dp"
+        android:textColor="#fff"
+        android:background="@drawable/ghost_button"
+        android:text="Checkout"/>
 
 
 </LinearLayout>

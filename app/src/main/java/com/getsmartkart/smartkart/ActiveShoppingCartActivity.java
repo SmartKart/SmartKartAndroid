@@ -1,10 +1,12 @@
 package com.getsmartkart.smartkart;
 
 import android.Manifest;
+import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Fragment;
 import android.app.FragmentManager;
 import android.app.FragmentTransaction;
+import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.media.MediaPlayer;
 import android.os.Bundle;
@@ -20,12 +22,15 @@ import com.google.android.gms.vision.barcode.Barcode;
 import com.google.android.gms.vision.barcode.BarcodeDetector;
 
 import java.io.IOException;
+import java.util.List;
 
 public class ActiveShoppingCartActivity extends Activity
         implements ItemListFragment.OnListFragmentInteractionListener {
 
     private BarcodeDetector barcodeDetector;
     private CameraSource cameraSource;
+
+    private List<ShoppingCartItem> listOfData;
 
     private boolean isPopupActive = false;
 
@@ -34,6 +39,11 @@ public class ActiveShoppingCartActivity extends Activity
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_active_shopping_cart);
         PermsUtil.getPermissions(this);
+
+        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+
+        ActionBar ab = getActionBar();
+        ab.setTitle("My Smart Kart");
 
         Fragment listOfItems = new ItemListFragment();
         Fragment checkoutBar = new CheckoutBarFragment();
@@ -107,4 +117,9 @@ public class ActiveShoppingCartActivity extends Activity
     public void closePopup(){
         isPopupActive = false;
     }
+    public void openPopup(){
+        isPopupActive = true;
+    }
+    public boolean getPopupStatus() {return isPopupActive; }
+
 }
