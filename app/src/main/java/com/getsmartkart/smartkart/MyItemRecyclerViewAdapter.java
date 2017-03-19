@@ -68,10 +68,10 @@ public class MyItemRecyclerViewAdapter extends RecyclerSwipeAdapter<MyItemRecycl
         holder.itemName.setText(item.getName());
         if(item.isOnSale()){
             holder.unitPrice.setText("$" + df.format(item.getPrice()));
-            SpannableString text = new SpannableString("$" + df.format(item.getPrice()) + "   $" + df.format(item.getPrice() * (item.getPercentOff()/100.0)));
+            SpannableString text = new SpannableString("$" + df.format(item.getPrice()) + "   $" + df.format(item.getPrice() * (1-(item.getPercentOff()/100.0))));
             text.setSpan(new StrikethroughSpan(), 0, df.format(item.getPrice()).length()+1, 0);
             holder.unitPrice.setText(text, TextView.BufferType.SPANNABLE);
-            holder.totalPriceOfItem.setText("$" + df.format((item.getPrice() * (item.getPercentOff()/100.0)) * item.getQuantity()));
+            holder.totalPriceOfItem.setText("$" + df.format((item.getPrice() * (1-(item.getPercentOff()/100.0))) * item.getQuantity()));
         }
         else{
             holder.unitPrice.setText("$" + df.format(item.getPrice()));

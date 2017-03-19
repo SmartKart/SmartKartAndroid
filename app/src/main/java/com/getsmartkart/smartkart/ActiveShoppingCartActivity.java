@@ -180,7 +180,7 @@ public class ActiveShoppingCartActivity extends Activity
                 ShoppingCartItem item = gson.fromJson(newData.getJSONObject(i).toString(), ShoppingCartItem.class);
                 newListOfData.add(item);
                 if(item.isOnSale()){
-                    cost += ((item.getPrice() * (item.getPercentOff()/100.0)) * item.getQuantity());
+                    cost += ((item.getPrice() * (1-(item.getPercentOff()/100.0))) * item.getQuantity());
                 }
                 else{
                     cost += (item.getPrice() * item.getQuantity());
